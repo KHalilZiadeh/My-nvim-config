@@ -50,6 +50,11 @@ return packer.startup(function(use)
 
   -- Theme plugin
   use { "catppuccin/nvim", as = "catppuccin" }
+  -- Lualine
+  use {
+  'nvim-lualine/lualine.nvim',
+  requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  }
 
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin
