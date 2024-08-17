@@ -10,6 +10,7 @@ require "user.atopirs"
 require "user.vimtree"
 require "user.lualine"
 require "user.comment"
+require "user.gitsign"
 
 Tabs= require("user.fncions")
 Tabs.setup()
