@@ -8,3 +8,8 @@ require "user.tlscope"
 require "user.treestr"
 require "user.atopirs"
 require "user.vimtree"
+require "user.lualine"
+require "user.comment"
+
+Tabs= require("user.fncions")
+Tabs.setup()
