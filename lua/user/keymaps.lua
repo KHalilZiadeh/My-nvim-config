@@ -43,21 +43,20 @@ keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 -- Navigate tabs
-keymap("n", "<leader-Right>", "gt", opts)
-keymap("n", "<leader-Left>", "gT", opts)
-keymap("n", "<leader>1", "1gt", opts)
-keymap("n", "<leader>2", "2gt", opts)
-keymap("n", "<leader>3", "3gt", opts)
-keymap("n", "<leader>4", "4gt", opts)
-keymap("n", "<leader>5", "5gt", opts)
-keymap("n", "<leader>6", "6gt", opts)
-keymap("n", "<leader>7", "7gt", opts)
-keymap("n", "<leader>8", "8gt", opts)
-keymap("n", "<leader>9", "9gt", opts)
-keymap("n", "<leader>0", ":lua Tabs.switch_to_last_tab()<CR>", opts)
+--[[ keymap("n", "<leader-Right>", "gt", opts) ]]
+--[[ keymap("n", "<leader-Left>", "gT", opts) ]]
+--[[ keymap("n", "<leader>1", "1gt", opts) ]]
+--[[ keymap("n", "<leader>2", "2gt", opts) ]]
+--[[ keymap("n", "<leader>3", "3gt", opts) ]]
+--[[ keymap("n", "<leader>4", "4gt", opts) ]]
+--[[ keymap("n", "<leader>5", "5gt", opts) ]]
+--[[ keymap("n", "<leader>6", "6gt", opts) ]]
+--[[ keymap("n", "<leader>7", "7gt", opts) ]]
+--[[ keymap("n", "<leader>8", "8gt", opts) ]]
+--[[ keymap("n", "<leader>9", "9gt", opts) ]]
+--[[ keymap("n", "<leader>0", ":lua Tabs.switch_to_last_tab()<CR>", opts) ]]
 
 -- Custom
-keymap("n", "<C-s>", ":w<CR>", opts)
 keymap("n", "<C-a>", "gg<S-v><S-G>", opts)
 
 -- Insert --
@@ -89,56 +88,26 @@ keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- Telescope
-keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<c-t>", "<cmd>Telescope live_grep<cr>", opts)
+keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
+keymap("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
 
 -- Nvimtree
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 
--- Gitsigns
-require('gitsigns').setup{
-  on_attach = function(bufnr)
-    local gitsigns = require('gitsigns')
+-- Tmux navigation
+keymap("n", "<leader>h", ":wincmd h<CR>", opts)
+keymap("n", "<leader>j", ":wincmd j<CR>", opts)
+keymap("n", "<leader>k", ":wincmd k<CR>", opts)
+keymap("n", "<leader>l", ":wincmd l<CR>", opts)
 
-    local function map(mode, l, r)
-      opts = opts or {}
-      opts.buffer = bufnr
-      vim.keymap.set(mode, l, r, opts)
-    end
 
-    -- Navigation
-    map('n', ']c', function()
-      if vim.wo.diff then
-        vim.cmd.normal({']c', bang = true})
-      else
-        gitsigns.nav_hunk('next')
-      end
-    end)
+-- init.lua or another Lua file in your Neovim config
+vim.cmd [[
+  let g:tmux_navigator_no_mapped_keys = 1  " Optional: Disable default key mappings
+]]
 
-    map('n', '[c', function()
-      if vim.wo.diff then
-        vim.cmd.normal({'[c', bang = true})
-      else
-        gitsigns.nav_hunk('prev')
-      end
-    end)
-
-    -- Actions
-    map('n', '<leader>hs', gitsigns.stage_hunk)
-    map('n', '<leader>hr', gitsigns.reset_hunk)
-    map('v', '<leader>hs', function() gitsigns.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-    map('v', '<leader>hr', function() gitsigns.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-    map('n', '<leader>hS', gitsigns.stage_buffer)
-    map('n', '<leader>hu', gitsigns.undo_stage_hunk)
-    map('n', '<leader>hR', gitsigns.reset_buffer)
-    map('n', '<leader>hp', gitsigns.preview_hunk)
-    map('n', '<leader>hb', function() gitsigns.blame_line{full=true} end)
-    map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
-    map('n', '<leader>hd', gitsigns.diffthis)
-    map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
-    map('n', '<leader>td', gitsigns.toggle_deleted)
-
-    -- Text object
-    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-  end
-}
+-- Custom key mappings
+vim.api.nvim_set_keymap('n', '<leader>h', ':TmuxNavigateLeft<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>j', ':TmuxNavigateDown<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>k', ':TmuxNavigateUp<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>l', ':TmuxNavigateRight<CR>', { noremap = true, silent = true })
